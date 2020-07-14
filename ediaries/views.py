@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import HttpResponseRedirect
+from django.urls import reverse
 
 def index(request):
-    return render(request, 'base.html', context={})
+    return HttpResponseRedirect(reverse('app_blog:app_blog_index'))
