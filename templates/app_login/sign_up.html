@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} EDiaries - Sign Up {% endblock %}
+
+{% block body %}
+{% if registered %}
+<div class="alert alert-success" role="alert">
+    Account Created Successfully!! <a href="">Login Here</a>
+</div>
+{% else %}
+<h2>Create New Account</h2>
+{{ form }}
+<button type="submit" name="signup" class="btn btn-success" btn-sm btn-block">Sign Up</button>
+<br>
+<p>Already Have an Accoutn? <a href="">Login Here</a></p>
+{% endif %}
+{% endblock %}
