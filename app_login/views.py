@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # Create your views here.
 
@@ -18,4 +18,13 @@ def sign_up(request):
         'form': form,
         'registered': registered
     }
-    return render(request, 'app_login/sign_up.html', context=dictionary)        
+    return render(request, 'app_login/sign_up.html', context=dictionary)
+
+
+def user_login(request):
+    form = AuthenticationForm()
+
+    dictionary = {
+        'form': form,
+    }
+    return render(request, 'app_login/login.html', context=dictionary)

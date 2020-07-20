@@ -10,7 +10,7 @@
 
 {% if registered %}
     <div class="alert alert-success" role="alert">
-        Account Created Successfully!! <a href="">Login Here</a>
+        Account Created Successfully!! <a href="{% url 'app_login:login' %}">Login Here</a>
     </div>
     {% else %}
     <h2>Create New Account</h2>
@@ -20,7 +20,7 @@
         <button type="submit" name="signup" class="btn btn-success" btn-sm btn-block>Sign Up</button>
     </form>
     <br>
-    <p>Already Have an Accoutn? <a href="">Login Here</a></p>
+    <p>Already Have an Accoutn? <a href="{% url 'app_login:login' %}">Login Here</a></p>
 {% endif %}
 
 {% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %} EDiaries - Login {% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block body %}
+    <h2>User Login</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" name="login" class="btn btn-primary" btn-sm btn-block>Login</button>
+    </form>
+{% endblock  %}
