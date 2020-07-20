@@ -10,3 +10,5 @@ Step 3: pip install mysqlclient
 Step 4: pip install mysql-connector-python
 
 Step 5: pip install pillow
+
+Step 6: pip install django-crispy-forms
