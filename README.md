@@ -1,9 +1,12 @@
 # EDiaries
+
 This is blog project using Django Framework and MySQL Database
 
 Step 1: Creare Virtual environment
 
 Step 2: pip install django
+
+step \*: sudo apt-get install python3-dev libmysqlclient-dev
 
 Step 3: pip install mysqlclient
 
