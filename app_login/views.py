@@ -6,9 +6,10 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from ediaries import decorators
 from django.contrib.auth.decorators import user_passes_test
+from .forms import SignUpForm
 
 
-#Logout required decorators 
+# Logout required decorators
 def logout_required(function=None, logout_url=None):
     """
     Decorator for views that checks that the user is logged out, redirecting
@@ -24,13 +25,14 @@ def logout_required(function=None, logout_url=None):
 
 # Create your views here.
 
+
 @logout_required(logout_url='/')
 def sign_up(request):
-    form = UserCreationForm()
+    form = SignUpForm()
     registered = False
-    
+
     if request.method == 'POST':
-        form_data = UserCreationForm(data=request.POST)
+        form_data = SignUpForm(data=request.POST)
 
         if form_data.is_valid():
             form_data.save()
