@@ -8,7 +8,7 @@ from ediaries import decorators
 from django.contrib.auth.decorators import user_passes_test
 
 
-#Logout required decorators 
+# Logout required decorators
 def logout_required(function=None, logout_url=None):
     """
     Decorator for views that checks that the user is logged out, redirecting
@@ -24,11 +24,12 @@ def logout_required(function=None, logout_url=None):
 
 # Create your views here.
 
+
 @logout_required(logout_url='/')
 def sign_up(request):
     form = UserCreationForm()
     registered = False
-    
+
     if request.method == 'POST':
         form_data = UserCreationForm(data=request.POST)
 
@@ -69,3 +70,8 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+@login_required(login_url='/account/login/')
+def profile(request):
+    return render(request, 'app_login/profile.html', context={})

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block title %} EDiaries - Profile {% endblock %}
+
+{% block body %}
+    <p> Name : {{ user.first_name }} {{ user.last_name }}</p>
+    <p> Email Address : {{ user.email }}</p>
+    <p> Username : {{ user.username }}</p>
+{% endblock %}
