@@ -71,3 +71,8 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return HttpResponseRedirect(reverse('index'))
+
+
+@login_required(login_url='/account/login/')
+def profile(request):
+    return render(request, 'app_login/profile.html', context={})
