@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
@@ -84,9 +84,9 @@ def update_profile(request):
     form = UpdateProfileForm(instance=current_user)
 
     if request.method == 'POST':
-        form = UpdateProfileForm(data=request.POST, instance=current_user)
-        if form.is_valid():
-            form.save()
+        form_data = UpdateProfileForm(data=request.POST, instance=current_user)
+        if form_data.is_valid():
+            form_data.save()
             form = UpdateProfileForm(instance=current_user)
 
     dictionary = {
@@ -94,3 +94,23 @@ def update_profile(request):
     }
 
     return render(request, 'app_login/update_profile.html', context=dictionary)
+
+
+@login_required(login_url='/account/login/')
+def update_password(request):
+    success = False
+    current_user = request.user
+    form = PasswordChangeForm(current_user)
+
+    if request.method == "POST":
+        form = PasswordChangeForm(current_user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            success = True
+
+    dictionary = {
+        'form': form,
+        'success': success
+    }
+
+    return render(request, 'app_login/pass_change.html', context=dictionary)

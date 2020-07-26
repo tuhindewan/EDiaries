@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} EDiaries - Change Password {% endblock %}
+
+{% block body %}
+
+{% if success %}
+    <div class="alert alert-success" role="alert">
+        Password Changed Successfully!!
+    </div>
+{% else %}
+    <h2>Change Password</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" name="update_pass" class="btn btn-warning" btn-sm btn-block>Update</button>
+    </form>
+{% endif %}
+
+{% endblock %}
