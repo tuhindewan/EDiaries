@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from ediaries import decorators
 from django.contrib.auth.decorators import user_passes_test
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateProfileForm
 
 
 # Logout required decorators
@@ -76,3 +76,21 @@ def user_logout(request):
 @login_required(login_url='/account/login/')
 def profile(request):
     return render(request, 'app_login/profile.html', context={})
+
+
+@login_required(login_url='/account/login/')
+def update_profile(request):
+    current_user = request.user
+    form = UpdateProfileForm(instance=current_user)
+
+    if request.method == 'POST':
+        form = UpdateProfileForm(data=request.POST, instance=current_user)
+        if form.is_valid():
+            form.save()
+            form = UpdateProfileForm(instance=current_user)
+
+    dictionary = {
+        'form': form,
+    }
+
+    return render(request, 'app_login/update_profile.html', context=dictionary)

@@ -11,7 +11,7 @@ class SignUpForm(UserCreationForm):
         fields = ['username', 'email', 'password1', 'password2']
 
 
-class UpdateProfile(UserChangeForm):
+class UpdateProfileForm(UserChangeForm):
     class Meta:
         model = User
         fields = ['username', 'email', 'first_name', 'last_name']
