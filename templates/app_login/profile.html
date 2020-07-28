@@ -3,6 +3,11 @@
 {% block title %} EDiaries - Profile {% endblock %}
 
 {% block body %}
+    {% if user.user_profile %}
+        ddd
+    {% else %}
+        <img src='/media/profile_pics/avatar.png' class="img-circle" width="100px">
+    {% endif %}
     <p> Name : {{ user.first_name }} {{ user.last_name }}</p>
     <p> Email Address : {{ user.email }}</p>
     <p> Username : {{ user.username }}</p>
