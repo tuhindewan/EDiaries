@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from ediaries import decorators
 from django.contrib.auth.decorators import user_passes_test
-from .forms import SignUpForm, UpdateProfileForm
+from .forms import SignUpForm, UpdateProfileForm, ChangePictureForm
 
 
 # Logout required decorators
@@ -114,3 +114,22 @@ def update_password(request):
     }
 
     return render(request, 'app_login/pass_change.html', context=dictionary)
+
+
+@login_required(login_url='/account/login/')
+def change_picture(request):
+    form = ChangePictureForm()
+
+    if request.method == "POST":
+        form = ChangePictureForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            return HttpResponseRedirect(reverse('app_login:profile'))
+
+    dictionary = {
+        'form': form
+    }
+    return render(request, 'app_login/change_pic.html', context=dictionary)
