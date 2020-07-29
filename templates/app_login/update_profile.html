@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block title %} EDiaries - Update Profile {% endblock %}
+
+{% block body %}
+<form method="POST">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" name="update" id="" class="btn btn-warning" btn-sm btn-block">Update</button>
+</form>
+{% endblock %}

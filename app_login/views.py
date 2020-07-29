@@ -1,12 +1,12 @@
 from django.shortcuts import render
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from ediaries import decorators
 from django.contrib.auth.decorators import user_passes_test
-from .forms import SignUpForm
+from .forms import SignUpForm, UpdateProfileForm, ChangePictureForm
 
 
 # Logout required decorators
@@ -76,3 +76,77 @@ def user_logout(request):
 @login_required(login_url='/account/login/')
 def profile(request):
     return render(request, 'app_login/profile.html', context={})
+
+
+@login_required(login_url='/account/login/')
+def update_profile(request):
+    current_user = request.user
+    form = UpdateProfileForm(instance=current_user)
+
+    if request.method == 'POST':
+        form_data = UpdateProfileForm(data=request.POST, instance=current_user)
+        if form_data.is_valid():
+            form_data.save()
+            form = UpdateProfileForm(instance=current_user)
+
+    dictionary = {
+        'form': form,
+    }
+
+    return render(request, 'app_login/update_profile.html', context=dictionary)
+
+
+@login_required(login_url='/account/login/')
+def update_password(request):
+    success = False
+    current_user = request.user
+    form = PasswordChangeForm(current_user)
+
+    if request.method == "POST":
+        form = PasswordChangeForm(current_user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            success = True
+
+    dictionary = {
+        'form': form,
+        'success': success
+    }
+
+    return render(request, 'app_login/pass_change.html', context=dictionary)
+
+
+@login_required(login_url='/account/login/')
+def change_picture(request):
+    form = ChangePictureForm()
+
+    if request.method == "POST":
+        form = ChangePictureForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            return HttpResponseRedirect(reverse('app_login:profile'))
+
+    dictionary = {
+        'form': form
+    }
+    return render(request, 'app_login/change_pic.html', context=dictionary)
+
+
+@login_required(login_url='/account/login/')
+def update_profile_pic(request):
+    form = ChangePictureForm(instance=request.user.user_profile)
+
+    if request.method == "POST":
+        form = ChangePictureForm(
+            request.POST, request.FILES, instance=request.user.user_profile)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('app_login:profile'))
+    dictionary = {
+        'form': form
+    }
+    return render(request, 'app_login/change_pic.html', context=dictionary)

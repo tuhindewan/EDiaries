@@ -3,8 +3,18 @@
 {% block title %} EDiaries - Profile {% endblock %}
 
 {% block body %}
+    {% if user.user_profile %}
+        <img src='/media/{{ user.user_profile.profile_pic }}' class="img-circle" width="100px">
+        <br><br>
+        <a href="{% url 'app_login:update_profile_pic' %}" class="btn btn-sm btn-info">Change Picture</a>
+    {% else %}
+        <img src='/media/profile_pics/avatar.png' class="img-circle" width="100px">
+        <br><br>
+        <a href="{% url 'app_login:change_picture' %}" class="btn btn-sm btn-info">Change Picture</a>
+    {% endif %}
+    <br>
     <p> Name : {{ user.first_name }} {{ user.last_name }}</p>
     <p> Email Address : {{ user.email }}</p>
     <p> Username : {{ user.username }}</p>
-    <a href="" class="btn btn-warning btn-sm">Update</a>
+    <a href="{% url 'app_login:update' %}" class="btn btn-warning btn-sm">Update</a>
 {% endblock %}
