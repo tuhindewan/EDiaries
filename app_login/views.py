@@ -133,3 +133,20 @@ def change_picture(request):
         'form': form
     }
     return render(request, 'app_login/change_pic.html', context=dictionary)
+
+
+@login_required(login_url='/account/login/')
+def update_profile_pic(request):
+    form = ChangePictureForm(instance=request.user.user_profile)
+
+    if request.method == "POST":
+        form = ChangePictureForm(
+            request.POST, request.FILES, instance=request.user.user_profile)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('app_login:profile'))
+    dictionary = {
+        'form': form
+    }
+    return render(request, 'app_login/change_pic.html', context=dictionary)
